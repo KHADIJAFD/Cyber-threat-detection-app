@@ -36,17 +36,87 @@ model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 # Title of the application
-st.title("Détection des cybermenaces")
+st.title("Cyber threat Detection")
+
+
+
+# Définir le thème de l'application
+def custom_theme():
+    primaryColor="#6eb52f"
+    backgroundColor="#f0f0f5"
+    secondaryBackgroundColor="#e0e0ef"
+    textColor="#262730"
+    font="sans serif"
+    css = f"""
+    <style>
+        .reportview-container .main .block-container{{
+            max-width: 950px;
+            padding-top: 2rem;
+            padding-right: 2rem;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+        }}
+        body{{
+            color: {textColor};
+            background-color: {backgroundColor};
+            font-family: {font};
+        }}
+        .sidebar .sidebar-content {{
+            background-color: {primaryColor};
+            color: {textColor};
+        }}
+        .stButton > button:first-child {{
+            background-color: {primaryColor};
+            color: {textColor};
+        }}
+        .stTextInput > div > div > input {{
+            color: {textColor};
+            background-color: {secondaryBackgroundColor};
+        }}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+
+custom_theme()
+
 
 # CSS style to customize the button
 button_style = '''
     <style>
         .stButton>button {
-            background-color: blue !important;
+            background-color: blue ;
         }
     </style>
 '''
 st.markdown(button_style, unsafe_allow_html=True)
+
+def afficher_informations(element):
+    if element == "Protocol":
+        st.info("Le protocole est une série de règles qui définissent comment les données sont échangées entre les périphériques sur un réseau, Pour connaître le protocole avec lequel vous travaillez, veuillez vérifier la documentation ou les paramètres de votre application.")
+    elif element == "Flag":
+        st.info("Un drapeau (flag) dans le contexte des réseaux informatiques est un indicateur dans un paquet de données qui identifie une certaine condition.")
+    elif element == "Packet":
+        st.info("Un paquet est une unité de données qui est transmise entre un émetteur et un récepteur sur un réseau.")
+    elif element == "Sender ID":
+        st.info("L'identifiant de l'expéditeur est une information qui identifie l'entité qui envoie un paquet sur un réseau.")
+    elif element == "Source IP Address":
+        st.info("L'adresse IP source est l'adresse IP d'où provient un paquet sur un réseau.")
+    elif element == "Source Port":
+        st.info("Le port source est un numéro de port utilisé par l'émetteur pour envoyer un paquet sur un réseau.")
+    elif element == "Packet Size":
+        st.info("La taille du paquet est la quantité de données contenues dans un paquet.")
+
+# Liste des options disponibles
+options = ["Protocol", "Flag", "Packet", "Sender ID", "Source IP Address", "Source Port", "Packet Size"]
+
+# Barre latérale
+with st.sidebar:
+    st.header("Get Information")
+    selected_element = st.selectbox("Select Element", options)
+
+    # Si un élément est sélectionné, afficher les informations correspondantes
+    if selected_element:
+        afficher_informations(selected_element)
 
 # Input fields for attack features
 
